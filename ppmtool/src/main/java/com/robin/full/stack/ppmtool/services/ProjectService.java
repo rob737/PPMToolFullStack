@@ -32,10 +32,20 @@ public class ProjectService {
         return project;
     }
 
-    public Iterable<Project> findAllProjects(){
+    public Iterable<Project> findAllProjects() {
         return projectRepository.findAll();
     }
 
+    public void deleteProjectByIdentifier(String projectId) {
+        Project project = projectRepository.findByProjectIdentifier(projectId);
 
+        if (project == null) {
+            throw new ProjectIdException("Can't delete as project Id doesn't exist");
+        }
+
+        projectRepository.delete(project);
+    }
+
+    /* To Update records, we need to just pass id stored in db in our incoming request and JPA will take care of it. */
 
 }
